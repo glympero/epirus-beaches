@@ -1,0 +1,24 @@
+{
+  "name": "epirusbeaches",
+  "version": "1.0.0",
+  "description": "This is a MEAN web app for beaches in epirus",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glympero/epirus-beaches.git"
+  },
+  "author": "Georgios Lymperopoulos <glympe77@gmail.com> (http://glympero.tk)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glympero/epirus-beaches/issues"
+  },
+  "homepage": "https://github.com/glympero/epirus-beaches#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4"
+  }
+}
