@@ -18,7 +18,9 @@
   "homepage": "https://github.com/glympero/epirus-beaches#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
     "ejs": "^2.4.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "jquery": "^2.2.0"
   }
 }
