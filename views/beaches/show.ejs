@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <h1><%= beach.name %></h1>
 
@@ -6,10 +6,12 @@
 
 <p><%= beach.description %></p>
 
+<p><a class="btn btn-success" href="/beaches/<%=beach._id %>/comments/new">Add Comment</a></p>
+
 <% beach.comments.forEach(function(comment){ %>
     <p>
         <strong><%= comment.author %></strong> - <%= comment.text %>
     </p>
 <% }) %>
 
-<% include partials/footer %>
+<% include ../partials/footer %>
