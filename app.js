@@ -1,9 +1,13 @@
 var express = require("express");
 var bodyParser = require("body-parser")
 var mongoose = require("mongoose");
+var Beaches = require("./models/beaches");
+var seedDB = require("./seeds");
 
 var app = express();
 var dbURI = 'mongodb://localhost/beaches_epirus';
+
+seedDB();
 mongoose.connect(dbURI);
 //mongoose.connect("mongodb://localhost/beaches_epirus");
 
@@ -13,14 +17,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 
-//DB Schema
-var beachesSchema = new mongoose.Schema({
-   name: String, 
-   image: String,
-   description: String
-});
 
-var Beaches = mongoose.model('Beaches', beachesSchema);
 
 // Beaches.create({
 //                 name: "Sivota", 
@@ -74,14 +71,29 @@ app.get("/beaches/new", function(req, res){
 });
 
 //SHOW ROUTE - show details of a selected beach
+// app.get("/beaches/:id", function(req, res){
+    
+//     var beachId = req.params.id;
+    
+//     Beaches.findById(beachId, function(err, beach){
+//         if(err) {
+//             console.log(err);
+//         }else{
+//             res.render("show", {beach: beach});
+//         }
+//     });
+// });
+
+//SHOW ROUTE - show details of a selected beach
 app.get("/beaches/:id", function(req, res){
     
     var beachId = req.params.id;
     
-    Beaches.findById(beachId, function(err, beach){
+    Beaches.findById(beachId).populate("comments").exec(function(err, beach){
         if(err) {
             console.log(err);
         }else{
+            
             res.render("show", {beach: beach});
         }
     });
