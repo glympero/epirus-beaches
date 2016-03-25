@@ -6,17 +6,17 @@ var data = [
         {
             name: "Mpela Vraka",
             image: "http://www.hoteloriana.com/images/bg-location/beach-in-sivota-epirus-in-greece.jpg",
-            description: "Fantastic Beach"
+            description: "Lorem ipsum dolor sit amet, elit phasellus ante malesuada magna, bibendum quis quisque, id arcu ante in id luctus euismod. Rutrum sodales scelerisque. Mauris quis est enim tellus tellus, gravida aliquam, senectus lectus quis nonummy vestibulum, quis purus blandit labore nunc. Sem nisl donec pellentesque, tincidunt maecenas urna in dui dui, tempus id, sit ante, bibendum felis turpis"
         },
         {
             name: "Lichnos",
             image: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Parga_Lichnos_beach.jpg",
-            description: "Great View"
+            description: "Lorem ipsum dolor sit amet, elit phasellus ante malesuada magna, bibendum quis quisque, id arcu ante in id luctus euismod. Rutrum sodales scelerisque. Mauris quis est enim tellus tellus, gravida aliquam, senectus lectus quis nonummy vestibulum, quis purus blandit labore nunc. Sem nisl donec pellentesque, tincidunt maecenas urna in dui dui, tempus id, sit ante, bibendum felis turpis"
         },
         {
             name: "Agios Nikitas",
             image: "http://www.beyond-villas.gr/img/gallery/katsiki/katsiki4.jpg",
-            description: "Too many stairs!"
+            description: "Lorem ipsum dolor sit amet, elit phasellus ante malesuada magna, bibendum quis quisque, id arcu ante in id luctus euismod. Rutrum sodales scelerisque. Mauris quis est enim tellus tellus, gravida aliquam, senectus lectus quis nonummy vestibulum, quis purus blandit labore nunc. Sem nisl donec pellentesque, tincidunt maecenas urna in dui dui, tempus id, sit ante, bibendum felis turpis"
         }
     ]
 

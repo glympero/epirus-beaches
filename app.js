@@ -13,7 +13,7 @@ mongoose.connect(dbURI);
 //mongoose.connect("mongodb://localhost/beaches_epirus");
 
 //Serve contents of public directory
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");

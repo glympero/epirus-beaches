@@ -19,9 +19,9 @@
     </div>
     
     
-    <div class="row text-center" style="display:flex; flex-wrap; wrap;">
+    <div class="row text-center">
         <% beaches.forEach(function(beach){ %>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6 image-holder">
                 <div class="thumbnail">
                     <img src="<%=beach.image %>">
                     <div class="caption">
@@ -31,8 +31,6 @@
                         <a href="/beaches/<%= beach._id %>" class="btn btn-primary">More info</a>
                     </p>
                 </div>
-               
-                
             </div>
        <% });%>
     </div>
