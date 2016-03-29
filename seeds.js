@@ -29,10 +29,10 @@ function seedDB(){
         console.log("Beaches removed")
          //Add campgrounds
          data.forEach(function(seed){
-           Beach.create(seed, function(err, beach){
-               if(err){
-                   console.log(err);
-               }else{
+          Beach.create(seed, function(err, beach){
+              if(err){
+                  console.log(err);
+              }else{
                     console.log("Beach Added!");  
                     Comment.create({
                         text:"Great place for relaxing",
@@ -47,8 +47,8 @@ function seedDB(){
                             console.log("Comment Added!")
                         }
                     });
-               }
-           }); 
+              }
+          }); 
         });
     });
     

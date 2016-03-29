@@ -2,14 +2,14 @@
 <div class="container">
     <div class="row">
         
-        <h1 class="text-center">Add new comment to <%= beach.name %></h1>
+        <h1 class="text-center">Edit Comment</h1>
         
         <div style="width: 30%; margin: 0 auto;">
             
             
-                <form action="/beaches/<%= beach._id %>/comments" method="POST">
+                <form action="/beaches/<%= beach_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                     <div class="form-group">
-                        <input class="form-control" type="text" placeholder="text" name="comment[text]">
+                        <input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
                     </div>
                     
                     
@@ -17,7 +17,7 @@
                         <button class="btn btn-lg btn-default btn-block btn-info">Submit</button>
                     </div>
                 </form>
-            <a href="/beaches/<%= beach._id %>">Back to <%= beach.name %></a>
+            <a href="/beaches/<%= beach_id %>">Back</a>
         </div>
     </div>
 </div>

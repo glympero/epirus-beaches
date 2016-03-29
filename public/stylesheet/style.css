@@ -14,3 +14,7 @@
     height: 90%;
     height: 20%;
 }
+
+#delete-form {
+    display: inline;
+}

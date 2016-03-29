@@ -1,24 +1,36 @@
-var express = require("express");
-var bodyParser = require("body-parser")
-var mongoose = require("mongoose");
-var Beaches = require("./models/beaches");
-var Comment = require("./models/comment");
-var seedDB = require("./seeds");
+var express         = require("express"),
+    bodyParser      = require("body-parser"),
+    mongoose        = require("mongoose"),
+    passport        = require("passport"),
+    LocalStrategy   = require("passport-local"),
+    User            = require("./models/user"),
+    seedDB          = require("./seeds"),
+    methodOverride  = require("method-override"),
+    flash           = require("connect-flash")
+;
+
+var indexRoutes     = require("./routes/index"),
+    beachRoutes     = require("./routes/beaches"),
+    commentRoutes   = require("./routes/comments"),
+    authRoutes      = require("./routes/auth");
 
 var app = express();
+
 var dbURI = 'mongodb://localhost/beaches_epirus';
-
-seedDB();
-mongoose.connect(dbURI);
 //mongoose.connect("mongodb://localhost/beaches_epirus");
-
-//Serve contents of public directory
-app.use(express.static(__dirname + "/public"));
+mongoose.connect(dbURI);
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
+//Serve contents of public directory
 
 
+
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+//Use connect-flash for displaying messages
+app.use(flash());
+//seedDB();
 
 // Beaches.create({
 //                 name: "Sivota", 
@@ -32,109 +44,41 @@ app.set("view engine", "ejs");
 //             } 
 //     });
 
+// ====================
+// PASSPORT CONFIG
+// ====================
 
-app.get("/", function(req, res){
-    res.render("home");
+app.use(require("express-session")({
+    secret: "Again this can be anything we want",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+app.use(function(req, res, next){
+    //Middleware which passes current user to every route
+    res.locals.currentUser = req.user;
+    //Passing message to eveyr page
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
 });
 
-//INDEX ROUTE - show all beaches
-app.get("/beaches", function(req, res) {
-    Beaches.find({}, function(err, beaches){
-        if(err){
-            console.log(err);
-        }else {
-            res.render("beaches/index", {beaches:beaches});
-        }
-    });
-});
-
-//CREATE ROUTE - add new beach to DB
-app.post("/beaches", function(req, res){
-   var beachName = req.body.name;
-   var beachImg = req.body.image;
-   var beachDesc = req.body.desc;
-    Beaches.create({
-                name: beachName, 
-                image: beachImg,
-                description: beachDesc
-            },function(err, beach){
-                if(err){
-                    console.log(err)
-                } else {
-                    res.redirect("/beaches");
-            } 
-    });
-});
-
-//NEW ROUTE - show form to create new beach
-app.get("/beaches/new", function(req, res){
-    res.render("beaches/new");
-});
-
-//SHOW ROUTE - show details of a selected beach
-// app.get("/beaches/:id", function(req, res){
-    
-//     var beachId = req.params.id;
-    
-//     Beaches.findById(beachId, function(err, beach){
-//         if(err) {
-//             console.log(err);
-//         }else{
-//             res.render("show", {beach: beach});
-//         }
-//     });
-// });
-
-//SHOW ROUTE - show details of a selected beach
-app.get("/beaches/:id", function(req, res){
-    
-    var beachId = req.params.id;
-    
-    Beaches.findById(beachId).populate("comments").exec(function(err, beach){
-        if(err) {
-            console.log(err);
-        }else{
-            
-            res.render("beaches/show", {beach: beach});
-        }
-    });
-});
+//Using Routes
+app.use(indexRoutes);
+app.use(authRoutes);
+app.use("/beaches", beachRoutes);
+app.use("/beaches/:id/comments", commentRoutes);
 
 
-// - Comments Routes
-app.get("/beaches/:id/comments/new", function(req, res) {
-    Beaches.findById(req.params.id, function(err, beach){
-        if (err){
-            console.log(err);
-        }else{
-            res.render("comments/new", {beach: beach});
-        }
-    });
-    
-});
-
-app.post("/beaches/:id/comments", function(req, res){
-    Beaches.findById(req.params.id, function(err, beach){
-        if(err){
-            console.log(err);
-            res.redirect("/beaches")
-        }else{
-            Comment.create(req.body.comment, function(err, comment){
-               if(err){
-                   console.log(err);
-               }else{
-                   beach.comments.push(comment);
-                   beach.save();
-                   res.redirect('/beaches/' + beach._id);
-               } 
-            });
-        }
-    });
-});
-
-
-
-
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 //Server Running
 app.listen(process.env.PORT, process.env.IP, function(){

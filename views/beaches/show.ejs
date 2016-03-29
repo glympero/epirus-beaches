@@ -17,6 +17,16 @@
                     <h4 class="pull-right">Free Access</h4>
                     <h4><a><%= beach.name %></a></h4>
                     <p><%= beach.description %></p>
+                        <% if (currentUser && beach.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-xs btn-warning" href="/beaches/<%= beach._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/beaches/<%= beach._id %>/?_method=DELETE" method="POST">
+                                <button class="btn btn-xs btn-danger">Delete</button>
+                            </form>
+                        <% } %>
+                        <span class="pull-right" id="delete-form"><em>Created By <%= beach.author.username %></em></span>
+                        <% if (!currentUser ){ %>
+                            <br/>
+                         <% } %> 
                 </div>
             </div>
             <div class="well">
@@ -27,21 +37,24 @@
                 <% beach.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-md-12">
-                            <strong><%= comment.author %></strong>
+                            <strong><%= comment.author.username %></strong>
                             <span class="pull-right">10 days ago</span>
                             <p>
                                 <%= comment.text %>
                             </p>
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <a href="/beaches/<%= beach._id %>/comments/<%= comment._id %>/edit" class="btn btn-xs btn-warning">Edit</a>
+                                <form id="delete-form" action="/beaches/<%= beach._id %>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">Delete</button>
+                                </form>
+                             <% } %>
                         </div>
-                        
                     </div>
                 <% }) %>
+                
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 <% include ../partials/footer %>
